@@ -73,10 +73,36 @@
             <span>RadioValue:{{radiogender}}</span>
         </div>
         <div><input type="submit" v-on:click="submit"></div>
+        <p>-----组件使用测试-----</p>
+        <button-counter title="com1" @diy_event='diy_event'>
+            <span>通过组件插槽'slot'，实现组件内自定义html标签</span>
+        </button-counter>
+        <button-counter title="com2"></button-counter>
     </div>
 
     <!-- JavaScript -->
     <script type="text/javascript">
+        Vue.component('button-counter', {
+            props: ['title'],//设置组件属性
+            data: function () {
+                return { comcount: 0 }
+            },
+            template: //组件，需要有根节点！
+                `<div>
+                <h3>hi,这是一个组件哦！</h3>
+                <button v-on:click="countevent">
+                {{title}}组件的点击次数：{{comcount}}
+                </button>
+                <slot></slot>
+            </div>`,
+            methods: {
+                countevent() {
+                    this.comcount++;
+                    this.$emit('diy_event', this.comcount, this.title);//给组件定义事件
+                }
+            },
+        })
+
         var app = new Vue({
             el: '#zl',
 
@@ -135,6 +161,9 @@
                         radiogender: this.radiogender
                     };
                     console.log(obj);
+                },
+                diy_event(num, title) {//这个是实现组件内部事件
+                    alert('弹窗说明成功实现' + title + '组件的事件:' + num);
                 }
             },
         });
