@@ -10,22 +10,61 @@
 
 <body>
     <div id="zl">
-        {{message}}
+        <p>{{message+1}}</p>
+        <p v-html="texthtml"></p>
+        <div v-bind:class="stylecss"><span>动态样式</span></div>
+        <p>{{bool?"YES":"NO"}}</p>
+        <p v-if="condition">翻转前：zengli；翻转后：{{myname.split('').reverse().join('')}}</p>
+        <div @click="click1">
+            点击我1
+            <div @click.stop="click2">
+                点击我2
+            </div>
+        </div>
     </div>
-    <script>
+
+    <!-- JavaScript -->
+    <script type="text/javascript">
         var app = new Vue({
             el: '#zl',
+
             data: {
-                message:"git github"
+                message: 1,
+                texthtml: '<span style="color:red">内嵌html</span>',
+                stylecss: 'green',
+                bool: true,
+                myname: "zengli",
+                condition: true
             },
-            beforeCreate(){
+
+            beforeCreate() {
                 console.log('hi beforecreate!');
             },
             created() {
                 console.log('hi its created!');
             },
+            methods: {
+                click1() {
+                    console.log("clickl，我被点击了");
+                },
+                click2() {
+                    console.log("click2,我也被点击了")
+                }
+            },
         });
     </script>
+
+    <!-- css -->
+    <style type="text/css">
+        .green {
+            color: rgb(71, 255, 108);
+        }
+
+        .blue {
+            color: blue;
+            font-size: 20px;
+        }
+    </style>
 </body>
 
 </html>
