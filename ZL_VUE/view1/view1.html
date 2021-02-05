@@ -30,11 +30,49 @@
         <p v-else>if条件渲染：Others</p>
         <p v-show="ok">show条件渲染</p>
         <ul>
-            <li v-for="item in items">{{item.message}}</li>
+            <li v-for="item in items">数组循环1：{{item.message}}</li>
+            <p></p>
+            <li v-for="item,index in items">数组循环2：{{index}}{{item.message}}</li>
+            <p></p>
+            <li v-for="item,index in items" :key="index">数组循环3：{{index}}{{item.message}}</li>
+            <p>-------------</p>
         </ul>
         <ul>
-            <li v-for="item in objects">{{item}}</li>
+            <li v-for="value in objects">对象循环1：{{value}}</li>
+            <p></p>
+            <li v-for="value,key in objects">对象循环2：{{key}}：{{value}}</li>
+            <p></p>
+            <li v-for="value,key in objects" :key="key">对象循环3：{{key}}：{{value}}</li>
         </ul>
+        <button v-on:click="counthandle(count)">点击计数：{{count}}</button>
+        <p>-----双向绑定及表单提交测试-----</p>
+        <div>
+            <input type="text" v-model="onething" placeholder="请输入单行文本...">
+            <div>您输入的是：{{onething}}</div>
+        </div>
+        <div>
+            <textarea type="text" v-model="something" placeholder="请输入多行文本..."></textarea>
+            <div>您输入的是：{{something}}</div>
+        </div>
+        <div>一道多项选择题：
+            <input type="checkbox" id="father" value="father" v-model="checkedparent">
+            <label for="father">father</label></input>
+            <input type="checkbox" id="mother" value="mother" v-model="checkedparent">
+            <label for="mother">mother</label></input>
+            <input type="checkbox" id="son" value="son" v-model="checkedparent">
+            <label for="son">son</label></input>
+            <br>
+            <span>CheckValue：{{checkedparent}}</span>
+        </div>
+        <div>一道radio单选题：
+            <input type="radio" id="man" value="Man" v-model="radiogender">
+            <label for="man">Man</label></input>
+            <input type="radio" id="woman" value="Woman" v-model="radiogender">
+            <label for="woman">Woman</label></input>
+            <br>
+            <span>RadioValue:{{radiogender}}</span>
+        </div>
+        <div><input type="submit" v-on:click="submit"></div>
     </div>
 
     <!-- JavaScript -->
@@ -64,7 +102,12 @@
                     title: "《炒股致富的秘密》",
                     author: "zeng",
                     date: "2021-02-05 星期五",
-                }
+                },
+                count: 0,
+                onething: '',
+                something: '',
+                checkedparent: ['father', 'mother'],
+                radiogender: 'Man'
             },
 
             beforeCreate() {
@@ -79,6 +122,19 @@
                 },
                 click2() {
                     console.log("click2,我也被点击了")
+                },
+                counthandle(num) {
+                    alert(num);
+                    this.count += 1;
+                },
+                submit() {
+                    var obj = {
+                        onething: this.onething,
+                        something: this.something,
+                        checkedparent: this.checkedparent,
+                        radiogender: this.radiogender
+                    };
+                    console.log(obj);
                 }
             },
         });
