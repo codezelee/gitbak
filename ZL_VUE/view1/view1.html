@@ -21,6 +21,20 @@
                 点击我2
             </div>
         </div>
+        <p v-bind:class="{active:isActive,white:IsGreen}">动态样式2</p>
+        <p v-bind:class="[isActive?'active':'',IsGreen?'white':'']">动态样式3</p>
+        <p :style="{color:color,fontSize:size}">动态样式4</p>
+        <p v-if="type=='A'">if条件渲染：A</p>
+        <p v-else-if="type=='B'">if条件渲染：B</p>
+        <p v-else-if="type=='C'">if条件渲染：C</p>
+        <p v-else>if条件渲染：Others</p>
+        <p v-show="ok">show条件渲染</p>
+        <ul>
+            <li v-for="item in items">{{item.message}}</li>
+        </ul>
+        <ul>
+            <li v-for="item in objects">{{item}}</li>
+        </ul>
     </div>
 
     <!-- JavaScript -->
@@ -34,7 +48,23 @@
                 stylecss: 'green',
                 bool: true,
                 myname: "zengli",
-                condition: true
+                condition: true,
+                isActive: true,
+                IsGreen: true,
+                color: 'blue',
+                size: '30px',
+                type: 'A',
+                ok: true,
+                items: [
+                    { message: '项目1' },
+                    { message: '项目2' },
+                    { message: '项目3' },
+                ],
+                objects: {
+                    title: "《炒股致富的秘密》",
+                    author: "zeng",
+                    date: "2021-02-05 星期五",
+                }
             },
 
             beforeCreate() {
@@ -63,6 +93,15 @@
         .blue {
             color: blue;
             font-size: 20px;
+        }
+
+        .active {
+            background: black;
+        }
+
+        .white {
+            color: white;
+            font-size: 30px;
         }
     </style>
 </body>
